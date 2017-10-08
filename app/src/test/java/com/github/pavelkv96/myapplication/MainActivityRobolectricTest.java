@@ -44,6 +44,7 @@ public class MainActivityRobolectricTest {
         mainActivity.findViewById(R.id.btnAdd).performClick();
         TextView tvResult = (TextView) mainActivity.findViewById(R.id.tvResult);
         assertEquals(tvResult.getText().toString(),"3.0");
+        activityController.restart();
         activityController.pause();
         activityController.stop();
         activityController.destroy();
