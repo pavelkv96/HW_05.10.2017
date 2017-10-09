@@ -22,20 +22,22 @@ import static junit.framework.Assert.assertEquals;
 @Config(constants = BuildConfig.class)
 public class MainActivityRobolectricTest {
     private ActivityController<MainActivity> activityController;
+    private MainActivity mainActivity;
 
     @Before
-    public void init(){
+    public void init() {
+        activityController.create();
+        activityController.start();
+        activityController.resume();
+
+        mainActivity = activityController.get();
         activityController = Robolectric.buildActivity(MainActivity.class);
     }
 
     //Test will complete
     @Test
-    public void testMainActivity(){
-        activityController.create();
-        activityController.start();
-        activityController.resume();
+    public void testMainActivity() {
 
-        MainActivity mainActivity =activityController.get();
 
         EditText etNum1 = (EditText) mainActivity.findViewById(R.id.etNum1);
         EditText etNum2 = (EditText) mainActivity.findViewById(R.id.etNum2);
@@ -43,14 +45,13 @@ public class MainActivityRobolectricTest {
         etNum2.setText("2");
         mainActivity.findViewById(R.id.btnAdd).performClick();
         TextView tvResult = (TextView) mainActivity.findViewById(R.id.tvResult);
-        assertEquals(tvResult.getText().toString(),"3.0");
-        activityController.restart();
-        activityController.pause();
-        activityController.stop();
-        activityController.destroy();
+        assertEquals(tvResult.getText().toString(), "3.0");
     }
 
     @After
-    public void destroy(){
+    public void destroy() {
+        activityController.pause();
+        activityController.stop();
+        activityController.destroy();
     }
 }
