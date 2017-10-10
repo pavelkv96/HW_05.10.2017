@@ -24,31 +24,31 @@ import static org.mockito.Mockito.mock;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class MainActivityRobolectric_And_MockitoTest {
 
-    private IMyVisible myVisible;
-    private IMyVisible myVisible_two;
-    private Button btnDiv;
+    private IMyVisible mVisible;
+    private IMyVisible mVisible_two;
+    private Button mDivButton;
 
     @Before
     public void setUp() {
         MainActivity mMainActivity = Robolectric.setupActivity(MainActivity.class);
-        myVisible_two = mock(MainActivity.class);
-        myVisible = spy(MainActivity.class);
-        btnDiv = (Button) mMainActivity.findViewById(R.id.btnDiv);
+        mVisible_two = mock(MainActivity.class);
+        mVisible = spy(MainActivity.class);
+        mDivButton = (Button) mMainActivity.findViewById(R.id.btnDiv);
     }
 
     //Test will complete
     @Test
     public void MockTest() {
-        when(myVisible_two.Visible(Matchers.anyString())).thenReturn("VISIBLE");
-        btnDiv.setVisibility(View.INVISIBLE);
-        assertEquals(btnDiv.getVisibility(),View.INVISIBLE);
+        when(mVisible_two.Visible(Matchers.anyString())).thenReturn("VISIBLE");
+        mDivButton.setVisibility(View.INVISIBLE);
+        assertEquals(mDivButton.getVisibility(),View.INVISIBLE);
     }
 
     //Test won't complete
     @Test
     public void SpyTest() {
-        when(myVisible.Visible(Matchers.anyString())).thenReturn("VISIBLE");
-        btnDiv.setVisibility(View.VISIBLE);
-        assertEquals(btnDiv.getVisibility(),View.INVISIBLE);
+        when(mVisible.Visible(Matchers.anyString())).thenReturn("VISIBLE");
+        mDivButton.setVisibility(View.VISIBLE);
+        assertEquals(mDivButton.getVisibility(),View.INVISIBLE);
     }
 }
