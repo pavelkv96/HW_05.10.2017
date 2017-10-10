@@ -14,14 +14,14 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IMyVisible {
 
     private static final String TAG = "MainActivity_Lifecycle";
-    EditText etNum1;
-    EditText etNum2;
-    Button btnAdd;
-    Button btnSub;
-    Button btnMult;
-    Button btnDiv;
-    TextView tvResult;
-    String oper = "";
+    private EditText mFirstEditText;
+    private EditText mSecondEdiText;
+    private Button mAddButton;
+    private Button mSubButton;
+    private Button mMultButton;
+    private Button mDivButton;
+    private TextView mResultTextView;
+    private String mOperation = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,22 +29,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Log.i(TAG, "OnCreate");
 
-        etNum1 = (EditText) findViewById(R.id.etNum1);
-        etNum2 = (EditText) findViewById(R.id.etNum2);
+        mFirstEditText = (EditText) findViewById(R.id.etNum1);
+        mSecondEdiText = (EditText) findViewById(R.id.etNum2);
 
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnSub = (Button) findViewById(R.id.btnSub);
-        btnMult = (Button) findViewById(R.id.btnMult);
-        btnDiv = (Button) findViewById(R.id.btnDiv);
+        mAddButton = (Button) findViewById(R.id.btnAdd);
+        mSubButton = (Button) findViewById(R.id.btnSub);
+        mMultButton = (Button) findViewById(R.id.btnMult);
+        mDivButton = (Button) findViewById(R.id.btnDiv);
 
-        tvResult = (TextView) findViewById(R.id.tvResult);
+        mResultTextView = (TextView) findViewById(R.id.tvResult);
 
-        btnAdd.setOnClickListener(this);
-        btnSub.setOnClickListener(this);
-        btnMult.setOnClickListener(this);
-        btnDiv.setOnClickListener(this);
+        mAddButton.setOnClickListener(this);
+        mSubButton.setOnClickListener(this);
+        mMultButton.setOnClickListener(this);
+        mDivButton.setOnClickListener(this);
 
-        etNum2.addTextChangedListener(new TextWatcher() {
+        mSecondEdiText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if ("INVISIBLE".equals(Visible(charSequence.toString()))) {
-                    btnDiv.setVisibility(View.INVISIBLE);
+                    mDivButton.setVisibility(View.INVISIBLE);
                 } else {
-                    btnDiv.setVisibility(View.VISIBLE);
+                    mDivButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -72,33 +72,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float num2 = 0;
         float result = 0;
 
-        if (TextUtils.isEmpty(etNum1.getText().toString()) || TextUtils.isEmpty(etNum2.getText().toString())) {
+        if (TextUtils.isEmpty(mFirstEditText.getText().toString()) || TextUtils.isEmpty(mSecondEdiText.getText().toString())) {
             return;
         }
 
-        num1 = Float.valueOf(etNum1.getText().toString());
-        num2 = Float.valueOf(etNum2.getText().toString());
+        num1 = Float.valueOf(mFirstEditText.getText().toString());
+        num2 = Float.valueOf(mSecondEdiText.getText().toString());
         switch (v.getId()) {
             case R.id.btnAdd:
-                oper = "+";
+                mOperation = "+";
                 result = num1 + num2;
                 break;
             case R.id.btnSub:
-                oper = "-";
+                mOperation = "-";
                 result = num1 - num2;
                 break;
             case R.id.btnMult:
-                oper = "*";
+                mOperation = "*";
                 result = num1 * num2;
                 break;
             case R.id.btnDiv:
-                oper = "/";
+                mOperation = "/";
                 result = num1 / num2;
                 break;
             default:
                 break;
         }
-        tvResult.setText(result + "");
+        mResultTextView.setText(result + "");
     }
 
     @Override
