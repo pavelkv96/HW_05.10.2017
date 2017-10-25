@@ -5,5 +5,5 @@ package com.github.pavelkv96.myapplication;
  */
 
 interface IMyVisible {
-    String Visible(String mZero);
+    int Visible(String mZero);
 }

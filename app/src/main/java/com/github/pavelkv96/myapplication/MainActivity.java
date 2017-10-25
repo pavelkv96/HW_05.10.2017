@@ -52,11 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if ("INVISIBLE".equals(Visible(charSequence.toString()))) {
+                mDivButton.setVisibility(Visible(charSequence.toString()));
+                /*if ("INVISIBLE".equals(Visible(charSequence.toString()))) {
                     mDivButton.setVisibility(View.INVISIBLE);
                 } else {
                     mDivButton.setVisibility(View.VISIBLE);
-                }
+                }*/
             }
 
             @Override
@@ -102,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public String Visible(String mZero) {
+    public int Visible(String mZero) {
         if (!mZero.equals("") && Float.parseFloat(mZero) == 0) {
-            return "INVISIBLE";
+            return /*"INVISIBLE";*/View.INVISIBLE;
         } else {
-            return "VISIBLE";
+            return /*"VISIBLE";*/View.VISIBLE;
         }
     }
 

@@ -5,15 +5,21 @@ import android.widget.Button;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.util.List;
 
 import static org.mockito.Mockito.mock;
 
@@ -39,16 +45,33 @@ public class MainActivityRobolectric_And_MockitoTest {
     //Test will complete
     @Test
     public void MockTest() {
-        when(mVisible_two.Visible(Matchers.anyString())).thenReturn("VISIBLE");
+        when(mVisible_two.Visible(Matchers.anyString())).thenReturn(View.VISIBLE);
         mDivButton.setVisibility(View.INVISIBLE);
-        assertEquals(mDivButton.getVisibility(),View.INVISIBLE);
+        assertEquals(mDivButton.getVisibility(), View.INVISIBLE);
     }
 
     //Test won't complete
     @Test
     public void SpyTest() {
-        when(mVisible.Visible(Matchers.anyString())).thenReturn("VISIBLE");
+        when(mVisible.Visible(Matchers.anyString())).thenReturn(View.VISIBLE);
         mDivButton.setVisibility(View.VISIBLE);
-        assertEquals(mDivButton.getVisibility(),View.INVISIBLE);
+        assertEquals(mDivButton.getVisibility(), View.INVISIBLE);
+    }
+
+    @Test
+    public void DoReturn() {
+        doReturn(View.INVISIBLE).when(mVisible).Visible("0");
+        mDivButton.setVisibility(View.INVISIBLE);
+        assertEquals(mDivButton.getVisibility(), mVisible.Visible("0"));
+    }
+
+    @Test
+    public void Captor() {
+        doReturn(View.VISIBLE).when(mVisible).Visible("12");
+        mVisible.Visible("12");
+        ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mVisible).Visible(stringArgumentCaptor.capture());
+        List<String> arguments = stringArgumentCaptor.getAllValues();
+        assertEquals("12", arguments.get(0));
     }
 }
